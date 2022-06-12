@@ -25,9 +25,10 @@ public class Main {
 	 * return number of tries
 	 */
 	static int solve(char[] target, Node<char[]> bank, int len) {
+		// our 3 marks:
 		char[] e = "#####".toCharArray(); // exact
 		char[] a = "#####".toCharArray(); // additional
-		char[] b = "#".repeat(26).toCharArray();
+		char[] b = "#".repeat(26).toCharArray(); // bad letters
 
 		int i = 0;
 		boolean done = false;
@@ -35,7 +36,7 @@ public class Main {
 			bank = swapBest(bank, e, a, b);
 			char[] g = bank.getValue();
 			bank = bank.getNext();
-			update(g, target, e, a, b);
+			updateMarks(g, target, e, a, b);
 			print(new char[][] { g, target, e, a, b });
 			done = (count(e) == 5);
 			i++;
@@ -67,7 +68,7 @@ public class Main {
 		System.out.println();
 	}
 
-	static void update(char[] g, char[] t, char[] e, char[] a, char[] b) {
+	static void updateMarks(char[] g, char[] t, char[] e, char[] a, char[] b) {
 		int j = find('#', a);
 		for (int i = 0; i < g.length; i++)
 			if (g[i] == t[i])
